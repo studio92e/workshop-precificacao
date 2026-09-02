@@ -9,14 +9,16 @@ o cara das ideias decide. Cada linha aqui é regra até alguém mudar.
 - Filho de mãe solteira. Cresceu com avó e avô presentes, na mesma casa.
 - Nunca sentiu falta de pai. Sentiu falta de sobrar: a casa estava sempre cheia.
 - Aprendeu cedo que a única coisa só dele era o que não contava. Esconder veio antes de mentir.
-- Parou de pedir coisas aos onze, depois de ver a mãe parcelar a conta de luz.
+- Cresceu sem faltar nada. Viu a mãe provar, todo dia, que dinheiro resolve. Acreditou.
 - Aos quinze, disse que queria ser "alguém que resolve".
 
 ## A família
 
-- Mãe: trabalha muito, chega tarde de uniforme, ama sem tempo. Nunca disse "não temos dinheiro". Não precisou.
-- Avó: a que enxerga ele. Lava louça de costas e escuta tudo. Primeira pessoa pra quem ele quer dar algo quando ganha dinheiro.
-- Avô: fala pouco. Finge dormir na cadeira da varanda. Riu quando o menino disse que queria ser alguém que resolve.
+- Mãe: dois empregos, um de manhã e outro de tarde. Sustentava ela e o filho sozinha, sem faltar nada. Não era pobre, era ausente. Ama sem tempo.
+- Mãe é a nona de onze filhos. Cresceu sem nada só seu e jurou que o filho teria tudo.
+- Avó: ficou órfã nova (pai aos treze, mãe aos quinze) e criou sozinha um irmão de sete. Aprendeu cedo demais a cuidar de gente. A que enxerga o menino. Lava louça de costas e escuta tudo. Primeira pessoa pra quem ele quer dar algo quando ganha dinheiro.
+- Avó e avô se conheceram numa fila. Ele carregou o saco dela sem pedir. Nunca mais se separaram. Onze filhos.
+- Avô: o homem que aprendeu a ficar. Fala pouco. Finge dormir na cadeira da varanda. Riu quando o menino disse que queria ser alguém que resolve.
 - A avó e um tio muito amado morrem ao longo da história. Ainda não está decidido quando nem como.
 
 ## A queda
