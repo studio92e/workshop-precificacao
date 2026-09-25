@@ -1,7 +1,7 @@
 # Workshop de Precificação — Soane Figliuolo
 
 Landing page do Mapa do Honorário, workshop "Você está cobrando ou pagando para trabalhar?",
-sábado, 24 de outubro de 2026, online e ao vivo.
+sábado, 7 de novembro de 2026, online e ao vivo.
 
 No ar em https://studio92e.github.io/workshop-precificacao/
 
