@@ -209,6 +209,8 @@
   .escada-linha.atual { background: rgba(224, 138, 93, 0.14); }
   .escada-linha.atual .escada-rotulo { color: var(--papel); font-weight: 600; }
   .escada-linha.atual .escada-valor { color: var(--argila-clara); font-size: 30px; font-weight: 600; }
+  .escada-linha.passou { opacity: 0.45; }
+  .escada-linha.passou .escada-valor { text-decoration: line-through; }
   .escada-nota { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11.5px; line-height: 1.55; letter-spacing: 0.03em; color: var(--fumo-claro); }
   .garantia-linha { display: flex; align-items: flex-start; gap: 10px; border-top: 1px solid var(--linha-clara); padding-top: 20px; }
   .garantia-linha svg { flex-shrink: 0; margin-top: 2px; }
@@ -333,11 +335,14 @@ document,'script','https://connect.facebook.net/en_US/fbevents.js');
 
 fbq('init', '1290908899732732');
 fbq('track', 'PageView');
-fbq('track', 'ViewContent', {
-  content_name: 'Workshop Mapa do Honorario',
-  content_category: 'workshop',
-  value: 27,
-  currency: 'BRL'
+// o valor e' o do lote em vigor, que o script do fim da pagina calcula pela data
+document.addEventListener('DOMContentLoaded', function () {
+  fbq('track', 'ViewContent', {
+    content_name: 'Workshop Mapa do Honorario',
+    content_category: 'workshop',
+    value: window.precoLoteAtual || 27,
+    currency: 'BRL'
+  });
 });
 
 document.addEventListener('click', function (e) {
@@ -345,7 +350,7 @@ document.addEventListener('click', function (e) {
   if (!cta) return;
   fbq('track', 'InitiateCheckout', {
     content_name: 'Workshop Mapa do Honorario',
-    value: 27,
+    value: window.precoLoteAtual || 27,
     currency: 'BRL'
   });
 });
@@ -593,7 +598,8 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
         <p class="chamada">Você garante acesso a tudo por:</p>
 
         <!-- Escada de 5 lotes, um por semana (decisão de 30/09: é a escada que a VSL gravada cita, de R$27 a R$67).
-             Trocar a classe .atual conforme o lote em campanha. -->
+             O lote em destaque, os textos de preço e os botões trocam sozinhos pela data (script no fim da página).
+             O HTML fica com o Lote 1, que é o que aparece se o script não rodar. -->
         <div class="escada">
           <div class="escada-linha atual">
             <span class="escada-rotulo">Lote 1 <span class="periodo">· 02/10 – 08/10</span></span>
@@ -737,5 +743,52 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
     <span><a href="#privacidade">Política de Privacidade</a> · <a href="#termos">Termos de Uso</a></span>
   </div>
 </footer>
+
+<!-- ===== Lote em vigor pela data =====
+     Mesma escada da calculadora (captacao/publico/honorario.html): mudou aqui, muda lá.
+     A data é a da Bahia. Pra conferir outra data, abra com ?hoje=2026-10-20. -->
+<script>
+(function () {
+  var LOTES = [
+    { de: '2026-10-02', ate: '2026-10-08', preco: 27 },
+    { de: '2026-10-09', ate: '2026-10-15', preco: 37 },
+    { de: '2026-10-16', ate: '2026-10-22', preco: 47 },
+    { de: '2026-10-23', ate: '2026-10-29', preco: 57 },
+    { de: '2026-10-30', ate: '2026-11-07', preco: 67 }
+  ];
+  var MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  function extenso(iso) { var d = iso.split('-'); return Number(d[2]) + ' de ' + MESES[Number(d[1]) - 1]; }
+  function hoje() {
+    var q = new URLSearchParams(location.search).get('hoje');
+    if (q && /^\d{4}-\d{2}-\d{2}$/.test(q)) return q;
+    try { return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Bahia' }).format(new Date()); }
+    catch (e) { return new Date().toISOString().slice(0, 10); }
+  }
+
+  var h = hoje(), i = 0;
+  LOTES.forEach(function (l, n) { if (h >= l.de) i = n; });
+  var lote = LOTES[i], prox = LOTES[i + 1];
+  window.precoLoteAtual = lote.preco;
+
+  var virada = prox ? 'No dia ' + extenso(prox.de) + ' passa para R$ ' + prox.preco + '.' : 'Vale até o dia do workshop.';
+  var ate = prox ? 'R$ ' + lote.preco + ' até ' + extenso(lote.ate) + '.' : 'R$ ' + lote.preco + ', último lote.';
+
+  [].forEach.call(document.querySelectorAll('.tk-preco'), function (el) { el.textContent = 'Lote atual · R$ ' + lote.preco; });
+  var hero = document.querySelector('.hero-lote');
+  if (hero) hero.innerHTML = '<b>' + ate + '</b> ' + virada + '<br>Vagas limitadas: é ao vivo, e a Soane tira dúvida de cada participante.';
+  var l1 = document.querySelector('.barra-info .l1'), l2 = document.querySelector('.barra-info .l2');
+  if (l1) l1.textContent = 'Lote ' + (i + 1) + ' · ' + ate.replace(/\.$/, '');
+  if (l2) l2.textContent = virada + ' Vagas limitadas.';
+  var nota = document.querySelector('.detalhes-nota span');
+  if (nota) nota.textContent = prox ? virada : 'Último lote, até o dia do workshop.';
+  [].forEach.call(document.querySelectorAll('.escada .escada-linha'), function (el, n) {
+    el.classList.toggle('atual', n === i);
+    el.classList.toggle('passou', n < i);
+  });
+  [].forEach.call(document.querySelectorAll('a.cta'), function (el) {
+    if (/inscrição por R\$ \d+/.test(el.textContent)) el.textContent = 'Fazer minha inscrição por R$ ' + lote.preco;
+  });
+})();
+</script>
 </body>
 </html>
