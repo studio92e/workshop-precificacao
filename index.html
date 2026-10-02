@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Mapa do Honorario: workshop ao vivo de precificacao para advogados, com Soane Figliuolo. Sabado, 7 de novembro, a partir das 9h, online.">
-<title>Mapa do Honorário | Você está cobrando ou pagando para trabalhar?</title>
+<meta name="description" content="Mapa de Honorarios: workshop ao vivo de precificacao para advogados, com Soane Figliuolo. Sabado, 7 de novembro, a partir das 9h, online.">
+<title>Mapa de Honorários | Você está cobrando ou pagando para trabalhar?</title>
 <meta property="og:type" content="website">
-<meta property="og:title" content="Mapa do Honorário | Você está cobrando ou pagando para trabalhar?">
-<meta property="og:description" content="Mapa do Honorario: workshop ao vivo de precificacao para advogados, com Soane Figliuolo. Sabado, 7 de novembro, a partir das 9h, online.">
+<meta property="og:title" content="Mapa de Honorários | Você está cobrando ou pagando para trabalhar?">
+<meta property="og:description" content="Mapa de Honorarios: workshop ao vivo de precificacao para advogados, com Soane Figliuolo. Sabado, 7 de novembro, a partir das 9h, online.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -144,12 +144,18 @@
   .passo-corpo { display: flex; flex-direction: column; gap: 10px; }
   .passo-corpo h3 { font-size: 19px; line-height: 1.3; }
   .passo-corpo p { font-size: 15.5px; color: var(--fumo); }
-  .passo-conta { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 13px; line-height: 1.6; color: var(--fumo); margin-top: 2px; }
-  .passo-igual { color: var(--fumo); padding-inline: 6px; }
-  .passo-saida { color: var(--argila); font-weight: 600; }
 
-  /* ---------- 04 Barra de CTA ---------- */
-  .barra-cta { display: flex; justify-content: center; padding-inline: 40px; padding-top: 48px; }
+  /* ---------- 04 A planilha ---------- */
+  .telas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; max-width: 960px; margin: 48px auto 0; }
+  .tela { margin: 0; display: flex; flex-direction: column; gap: 18px; }
+  .tela-quadro { border: 1px solid rgba(42, 36, 32, 0.14); border-radius: 18px; overflow: hidden; background: var(--papel); aspect-ratio: 9 / 16; }
+  .tela-quadro img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .tela figcaption { display: flex; flex-direction: column; gap: 6px; }
+  .tela h3 { font-size: 19px; line-height: 1.3; }
+  .tela p { font-size: 15.5px; color: var(--fumo); }
+
+  /* ---------- Barra de CTA: fecha a seção da planilha, dentro dela ---------- */
+  .barra-cta { display: flex; justify-content: center; margin-top: 64px; }
   .barra-cta > div {
     background: var(--tinta); border: 1px solid var(--argila); border-radius: 14px; padding: 16px;
     display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: center;
@@ -226,6 +232,21 @@
   .autoridade-texto h2 { font-size: 38px; line-height: 1.15; }
   .autoridade-texto p { font-size: 16.5px; color: var(--fumo); }
 
+  /* ---------- 08 Onde ela já esteve ---------- */
+  .esteve { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; padding-top: 24px; border-top: 1px solid rgba(156, 68, 35, 0.28); }
+  .esteve-rotulo { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.11em; text-transform: uppercase; color: var(--fumo); }
+  .esteve-logos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .esteve-logos img { display: block; width: 100%; height: auto; border-radius: 10px; }
+
+  /* ---------- 08b Provas sociais ---------- */
+  .provas-grade { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 48px; }
+  .prova { margin: 0; background: var(--areia); border-radius: 14px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; }
+  .prova blockquote { margin: 0; font-family: "Besley", Georgia, serif; font-style: italic; font-weight: 500; font-size: 18px; line-height: 1.5; color: var(--tinta); }
+  .prova figcaption { display: flex; flex-direction: column; gap: 3px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.04em; color: var(--fumo); }
+  .prova figcaption b { color: var(--tinta); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  .prova.vago { background: transparent; border: 2px dashed var(--fumo-claro); }
+  .prova.vago blockquote { font-family: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif; font-style: normal; font-weight: 400; font-size: 15px; color: var(--fumo); }
+
   /* ---------- 09 Detalhes ---------- */
   .detalhes { padding-block: 136px 96px; }
   .detalhes-card { background: var(--argila); border-radius: 14px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -298,7 +319,12 @@
     .passo { grid-template-columns: 62px minmax(0, 1fr); gap: 16px; padding-block: 13px; }
     .passo-num { font-size: 28px; }
 
-    .barra-cta { padding-inline: 22px; }
+    /* no celular as três telas viram uma faixa que desliza de lado, com a próxima aparecendo na borda */
+    .telas { display: flex; gap: 16px; max-width: none; margin: 32px -22px 0; padding: 0 22px 6px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .telas::-webkit-scrollbar { display: none; }
+    .tela { flex: 0 0 74%; scroll-snap-align: center; }
+
+    .barra-cta { margin-top: 44px; }
     .barra-cta > div { grid-template-columns: 1fr; }
 
     .video-card { padding: 22px; }
@@ -314,6 +340,9 @@
     .foto-moldura { min-height: 360px; }
     .foto-moldura img { height: 400px; }
     .autoridade-texto h2 { font-size: 28px; }
+    .esteve-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .provas-grade { grid-template-columns: 1fr; gap: 16px; margin-top: 32px; }
+    .prova { padding: 24px; }
 
     .detalhes { padding-block: 104px 64px; }
     .detalhes-card { grid-template-columns: 1fr; }
@@ -338,7 +367,7 @@ fbq('track', 'PageView');
 // o valor e' o do lote em vigor, que o script do fim da pagina calcula pela data
 document.addEventListener('DOMContentLoaded', function () {
   fbq('track', 'ViewContent', {
-    content_name: 'Workshop Mapa do Honorario',
+    content_name: 'Workshop Mapa de Honorarios',
     content_category: 'workshop',
     value: window.precoLoteAtual || 27,
     currency: 'BRL'
@@ -349,7 +378,7 @@ document.addEventListener('click', function (e) {
   var cta = e.target.closest('a.cta');
   if (!cta) return;
   fbq('track', 'InitiateCheckout', {
-    content_name: 'Workshop Mapa do Honorario',
+    content_name: 'Workshop Mapa de Honorarios',
     value: window.precoLoteAtual || 27,
     currency: 'BRL'
   });
@@ -389,7 +418,7 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
       </div>
 
       <div class="hero-texto">
-        <p class="hero-nome">Workshop Mapa do Honorário · 7 de novembro</p>
+        <p class="hero-nome">Workshop Mapa de Honorários · 7 de novembro</p>
         <h1 class="serif">Você está cobrando ou <em>pagando para trabalhar</em>?</h1>
         <p class="hero-sub">Um workshop prático para advogados que trabalham muito, mas ainda não sabem se seus honorários realmente dão lucro. Em um sábado você sai com o preço de um serviço do seu escritório calculado do zero: o que ele custa, o que você precisa cobrar e até onde dá pra negociar.</p>
 
@@ -428,7 +457,7 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
     <div class="centro">
       <span class="selo">O mecanismo</span>
       <h2 class="serif">O Mapa TEJ de Precificação</h2>
-      <p>Seis etapas que partem do custo real do escritório e chegam no preço que sustenta ele. Não é aula sobre precificação, é execução guiada, com a Soane do lado corrigindo o caminho.</p>
+      <p>Seis etapas que partem do que o seu escritório gasta e chegam no preço de um serviço. No workshop você faz cada uma com os seus números, e a Soane acompanha e corrige o caminho.</p>
     </div>
 
     <ol class="cadeia">
@@ -436,64 +465,93 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
         <span class="passo-num">01</span>
         <div class="passo-corpo">
           <h3>O que sai da conta todo mês</h3>
-          <p>Levantamento dos custos fixos e variáveis do escritório: tudo que sai da conta todo mês, independente de quantos processos entram.</p>
-          <p class="passo-conta">custos fixos + custos variáveis <span class="passo-igual">=</span> <span class="passo-saida">custo mensal</span></p>
+          <p>Tudo o que o escritório gasta por mês entra no levantamento, com cliente novo ou sem.</p>
         </div>
       </li>
       <li class="passo">
         <span class="passo-num">02</span>
         <div class="passo-corpo">
           <h3>O valor da hora do escritório, e o seu</h3>
-          <p>O custo mensal dividido pelas horas trabalhadas vira o valor da hora do escritório. Separado disso, o valor da sua própria hora como sócio.</p>
-          <p class="passo-conta">custo mensal ÷ horas trabalhadas <span class="passo-igual">=</span> <span class="passo-saida">valor da hora</span></p>
+          <p>Desse levantamento sai quanto custa uma hora do escritório. A sua hora, como sócio, é calculada à parte.</p>
         </div>
       </li>
       <li class="passo">
         <span class="passo-num">03</span>
         <div class="passo-corpo">
           <h3>Quanto esse serviço realmente consome</h3>
-          <p>Quantas horas esse serviço específico consome, do primeiro contato à entrega. A estimativa realista, não a otimista.</p>
-          <p class="passo-conta">do primeiro contato à entrega <span class="passo-igual">=</span> <span class="passo-saida">horas do serviço</span></p>
+          <p>Você escolhe um serviço e estima as horas dele, do primeiro contato à entrega, com o número realista no lugar do otimista.</p>
         </div>
       </li>
       <li class="passo">
         <span class="passo-num">04</span>
         <div class="passo-corpo">
           <h3>A margem que funciona de verdade</h3>
-          <p>A margem de lucro desejada aplicada sobre o valor da hora, de um jeito que faz ela bater sobre o preço final, não sobre o custo.</p>
-          <p class="passo-conta">valor da hora + margem desejada <span class="passo-igual">=</span> <span class="passo-saida">hora com margem</span></p>
+          <p>Escolher a margem de lucro é a parte fácil. A Soane mostra como aplicar essa margem pra que ela apareça inteira no fim do mês.</p>
         </div>
       </li>
       <li class="passo">
         <span class="passo-num">05</span>
         <div class="passo-corpo">
           <h3>O número que sustenta o escritório</h3>
-          <p>O valor da hora com margem multiplicado pelas horas do serviço. O preço que sustenta o escritório, não o que "parece justo".</p>
-          <p class="passo-conta">hora com margem × horas do serviço <span class="passo-igual">=</span> <span class="passo-saida">preço do serviço</span></p>
+          <p>Com as quatro etapas prontas, o preço do serviço sai de uma conta, e você consegue explicar de onde veio cada parte dele.</p>
         </div>
       </li>
       <li class="passo">
         <span class="passo-num">06</span>
         <div class="passo-corpo">
           <h3>Até onde dá pra ceder</h3>
-          <p>Até onde dá pra ceder numa negociação e ainda pagar a estrutura. O número que você leva pra reunião, não o que decide na hora, sob pressão.</p>
-          <p class="passo-conta">o menor preço que ainda paga a estrutura <span class="passo-igual">=</span> <span class="passo-saida">piso da negociação</span></p>
+          <p>Antes de sentar com o cliente você já sabe qual é o menor valor que ainda paga a estrutura, e o desconto deixa de ser decidido na hora, sob pressão.</p>
         </div>
       </li>
     </ol>
   </div>
 </section>
 
-<!-- ===== 04 · Barra de CTA ===== -->
-<div class="barra-cta">
-  <div>
-    <a class="cta" href="#inscricao">Entrar no workshop de 7 de novembro</a>
-    <div class="barra-info">
-      <span class="l1">Lote 1 · R$ 27 até 8 de outubro</span>
-      <span class="l2">No dia 9 de outubro passa para R$ 37. Vagas limitadas.</span>
+<!-- ===== 04 · A planilha =====
+     As três animações são trechos da animação do painel (planilha-painel/animacao-saas), em laço. -->
+<section>
+  <div class="wrap">
+    <div class="centro">
+      <span class="selo">A planilha</span>
+      <h2 class="serif">A planilha fica com você</h2>
+      <p>Tudo o que você calcula no workshop fica montado numa planilha sua. Na segunda-feira é só abrir, trocar os números e precificar o próximo serviço.</p>
+    </div>
+
+    <div class="telas">
+      <figure class="tela">
+        <div class="tela-quadro"><img src="planilha-hora.webp" width="320" height="568" loading="lazy" alt="Animação da planilha: as despesas do mês são lançadas e o custo de cada hora de trabalho aparece calculado"></div>
+        <figcaption>
+          <h3>Quanto custa a sua hora</h3>
+          <p>Você lança as despesas do mês e ela mostra quanto cada hora de trabalho precisa render pra pagar o escritório.</p>
+        </figcaption>
+      </figure>
+      <figure class="tela">
+        <div class="tela-quadro"><img src="planilha-camadas.webp" width="320" height="568" loading="lazy" alt="Animação da planilha: o honorário de um serviço cresce em barras, uma para cada parte do preço"></div>
+        <figcaption>
+          <h3>O honorário, parte por parte</h3>
+          <p>Horas, complexidade, lucro e imposto entram um de cada vez, e dá pra ver quanto cada um pesa no valor final.</p>
+        </figcaption>
+      </figure>
+      <figure class="tela">
+        <div class="tela-quadro"><img src="planilha-cobrado.webp" width="320" height="568" loading="lazy" alt="Animação da planilha: um serviço é registrado e o valor cobrado aparece ao lado do valor calculado"></div>
+        <figcaption>
+          <h3>O que você cobrou e o que a conta pedia</h3>
+          <p>Registre quanto cobrou em cada serviço e ela aponta em quais você recebeu menos do que deveria.</p>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="barra-cta">
+      <div>
+        <a class="cta" href="#inscricao">Entrar no workshop de 7 de novembro</a>
+        <div class="barra-info">
+          <span class="l1">Lote 1 · R$ 27 até 8 de outubro</span>
+          <span class="l2">No dia 9 de outubro passa para R$ 37. Vagas limitadas.</span>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- ===== 05 · Vídeo =====
      Fora do ar até a VSL editada existir: o espaço reservado aparecia pro público.
@@ -597,12 +655,13 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
       <div class="painel-preco">
         <p class="chamada">Você garante acesso a tudo por:</p>
 
-        <!-- Escada de 5 lotes, um por semana (decisão de 30/09: é a escada que a VSL gravada cita, de R$27 a R$67).
+        <!-- Escada de 5 lotes (decisão de 30/09: é a escada que a VSL gravada cita, de R$27 a R$67).
+             Desde 02/10 o calendário começa em 06/10: o Lote 1 é o pré-lançamento, de três dias, e os outros seguem um por semana.
              O lote em destaque, os textos de preço e os botões trocam sozinhos pela data (script no fim da página).
              O HTML fica com o Lote 1, que é o que aparece se o script não rodar. -->
         <div class="escada">
           <div class="escada-linha atual">
-            <span class="escada-rotulo">Lote 1 <span class="periodo">· 02/10 – 08/10</span></span>
+            <span class="escada-rotulo">Lote 1, pré-lançamento <span class="periodo">· 06/10 – 08/10</span></span>
             <span class="escada-valor">R$ 27</span>
           </div>
           <div class="escada-linha">
@@ -652,6 +711,16 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
         <h2 class="serif">Um workshop conduzido por quem já precificou errado e se corrigiu.</h2>
         <p>São mais de 20 anos de advocacia e 15 de vivência empreendedora. Em 2017, Soane fundou o S. Figliuolo Advocacia de Negócios e, desde então, já orientou mais de 5 mil empresas e empresários em decisões societárias, patrimoniais e estratégicas.</p>
         <p>No início, ela cobrava pelo trabalho que dava, não pelo valor que entregava, e demorou a perceber que excelência técnica sozinha não sustenta um escritório. A virada veio quando passou a tratar o próprio escritório como empresa: custo mapeado, hora precificada, margem definida. O Mapa TEJ de Precificação nasceu daí.</p>
+
+        <div class="esteve">
+          <span class="esteve-rotulo">Onde ela já esteve</span>
+          <div class="esteve-logos">
+            <img src="logo-sicredi.webp" width="356" height="228" loading="lazy" alt="Sicredi">
+            <img src="logo-xp.webp" width="356" height="228" loading="lazy" alt="XP Investimentos">
+            <img src="logo-btg.webp" width="358" height="228" loading="lazy" alt="BTG Pactual">
+            <img src="logo-sebrae.webp" width="356" height="228" loading="lazy" alt="Sebrae">
+          </div>
+        </div>
       </div>
 
     </div>
@@ -668,7 +737,7 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
       </div>
 
       <div class="detalhes-texto">
-        <span class="detalhes-selo">Workshop de Precificação</span>
+        <span class="detalhes-selo">Mapa de Honorários · workshop ao vivo</span>
         <div class="detalhes-linhas">
           <div><span><strong>DATA:</strong> SÁBADO, 7 DE NOVEMBRO</span></div>
           <div><span><strong>HORÁRIO:</strong> A PARTIR DAS 9H · COM 8 HORAS DE DURAÇÃO</span></div>
@@ -740,7 +809,7 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
 <footer>
   <div class="wrap">
     <span>Soane Figliuolo · Todos os direitos reservados © 2026</span>
-    <span><a href="#privacidade">Política de Privacidade</a> · <a href="#termos">Termos de Uso</a></span>
+    <span><a href="privacidade.html">Política de Privacidade</a> · <a href="termos.html">Termos de Uso</a></span>
   </div>
 </footer>
 
@@ -750,7 +819,7 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
 <script>
 (function () {
   var LOTES = [
-    { de: '2026-10-02', ate: '2026-10-08', preco: 27 },
+    { de: '2026-10-06', ate: '2026-10-08', preco: 27 },
     { de: '2026-10-09', ate: '2026-10-15', preco: 37 },
     { de: '2026-10-16', ate: '2026-10-22', preco: 47 },
     { de: '2026-10-23', ate: '2026-10-29', preco: 57 },
