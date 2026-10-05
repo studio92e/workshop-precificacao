@@ -149,7 +149,7 @@
   .centro { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
   .centro .selo { align-self: center; }
   .centro h2 { font-size: 40px; line-height: 1.14; }
-  .centro p { max-width: 68ch; color: var(--fumo); font-size: 16.5px; }
+  .centro p { max-width: 68ch; color: var(--fumo); font-size: 16.5px; text-wrap: pretty; }
   .cadeia { position: relative; list-style: none; max-width: 760px; margin: 48px auto 0; padding: 0; }
   .cadeia::before { content: ""; position: absolute; left: 24px; top: 26px; bottom: 34px; width: 1px; background: rgba(156, 68, 35, 0.28); }
   .passo { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 28px; padding-block: 17px; }
@@ -164,7 +164,7 @@
   .passo-corpo h3 { font-size: 19px; line-height: 1.3; }
   .passo-corpo p { font-size: 15.5px; color: var(--fumo); }
 
-  /* ---------- 04 A planilha ---------- */
+  /* ---------- 04 O painel ---------- */
   .telas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; max-width: 960px; margin: 48px auto 0; }
   .tela { margin: 0; display: flex; flex-direction: column; gap: 18px; }
   .tela-quadro { border: 1px solid rgba(42, 36, 32, 0.14); border-radius: 18px; overflow: hidden; background: var(--papel); aspect-ratio: 9 / 16; }
@@ -173,7 +173,7 @@
   .tela h3 { font-size: 19px; line-height: 1.3; }
   .tela p { font-size: 15.5px; color: var(--fumo); }
 
-  /* ---------- Barra de CTA: fecha a seção da planilha, dentro dela ---------- */
+  /* ---------- Barra de CTA: fecha a seção do painel, dentro dela ---------- */
   .barra-cta { display: flex; justify-content: center; margin-top: 64px; }
   .barra-cta > div {
     background: var(--tinta); border: 1px solid var(--argila); border-radius: 14px; padding: 16px;
@@ -541,36 +541,38 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
   </div>
 </section>
 
-<!-- ===== 04 · A planilha =====
+<!-- ===== 04 · O painel =====
+     Desde 05/10/2026 a inscrição não entrega mais a planilha: dá acesso antecipado ao Painel de Honorários
+     por 30 dias. A página ainda não diz a partir de quando os 30 dias contam, porque isso não foi definido.
      As três animações são trechos da animação do painel (planilha-painel/animacao-saas), em laço. -->
 <section>
   <div class="wrap">
     <div class="centro">
-      <span class="selo">A planilha</span>
-      <h2 class="serif">A planilha fica com você</h2>
-      <p>Tudo o que você calcula no workshop fica montado numa planilha sua. Na segunda-feira é só abrir, trocar os números e precificar o próximo serviço.</p>
+      <span class="selo">O painel</span>
+      <h2 class="serif">30 dias de acesso antecipado ao Painel de Honorários</h2>
+      <p>Com a inscrição, você usa por 30 dias o painel que faz a conta do workshop com os números do seu escritório. É só abrir, trocar os valores e precificar o próximo serviço.</p>
     </div>
 
     <div class="telas">
       <figure class="tela">
-        <div class="tela-quadro"><img src="planilha-hora.webp" width="320" height="568" loading="lazy" alt="Animação da planilha: as despesas do mês são lançadas e o custo de cada hora de trabalho aparece calculado"></div>
+        <div class="tela-quadro"><img src="planilha-hora.webp" width="320" height="568" loading="lazy" alt="Animação do painel: as despesas do mês são lançadas e o custo de cada hora de trabalho aparece calculado"></div>
         <figcaption>
           <h3>Quanto custa a sua hora</h3>
-          <p>Você lança as despesas do mês e ela mostra quanto cada hora de trabalho precisa render pra pagar o escritório.</p>
+          <p>Você lança as despesas do mês e ele mostra quanto cada hora de trabalho precisa render pra pagar o escritório.</p>
         </figcaption>
       </figure>
       <figure class="tela">
-        <div class="tela-quadro"><img src="planilha-camadas.webp" width="320" height="568" loading="lazy" alt="Animação da planilha: o honorário de um serviço cresce em barras, uma para cada parte do preço"></div>
+        <div class="tela-quadro"><img src="planilha-camadas.webp" width="320" height="568" loading="lazy" alt="Animação do painel: o honorário de um serviço cresce em barras, uma para cada parte do preço"></div>
         <figcaption>
           <h3>O honorário, parte por parte</h3>
           <p>Horas, complexidade, lucro e imposto entram um de cada vez, e dá pra ver quanto cada um pesa no valor final.</p>
         </figcaption>
       </figure>
       <figure class="tela">
-        <div class="tela-quadro"><img src="planilha-cobrado.webp" width="320" height="568" loading="lazy" alt="Animação da planilha: um serviço é registrado e o valor cobrado aparece ao lado do valor calculado"></div>
+        <div class="tela-quadro"><img src="planilha-cobrado.webp" width="320" height="568" loading="lazy" alt="Animação do painel: um serviço é registrado e o valor cobrado aparece ao lado do valor calculado"></div>
         <figcaption>
           <h3>O que você cobrou e o que a conta pedia</h3>
-          <p>Registre quanto cobrou em cada serviço e ela aponta em quais você recebeu menos do que deveria.</p>
+          <p>Registre quanto cobrou em cada serviço e ele aponta em quais você recebeu menos do que deveria.</p>
         </figcaption>
       </figure>
     </div>
@@ -673,7 +675,7 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
           </div>
           <div>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E08A5D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8.5 12 2.5 2.5 4.5-5"></path></svg>
-            <p><strong>Planilha do Mapa TEJ</strong> — pra refazer essa conta nos outros serviços do escritório na segunda-feira.</p>
+            <p><strong>30 dias de acesso antecipado ao Painel de Honorários</strong> — pra refazer essa conta nos outros serviços do escritório.</p>
           </div>
           <div>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E08A5D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8.5 12 2.5 2.5 4.5-5"></path></svg>
