@@ -88,7 +88,7 @@
   @media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } }
 
   /* ---------- 02 Hero: título, a VSL e a chamada, numa coluna só dentro do card escuro ---------- */
-  .hero { padding-block: 100px 88px; }
+  .hero { padding-block: 56px 88px; }
   .hero-card {
     position: relative;
     background: var(--tinta);
@@ -305,13 +305,17 @@
     .wrap { padding-inline: 22px; }
     section { padding-block: 64px; }
 
-    .hero { padding-block: 92px 56px; }
+    .hero { padding-block: 26px 56px; }
     .hero-card { padding: 26px 14px 30px; }
     .hero-topo { gap: 14px; margin-bottom: 20px; }
     .hero-topo h1 { font-size: 31px; }
     .vsl { border-radius: 10px; }
-    .vsl-disco { width: 70px; height: 70px; }
-    .vsl-disco svg { width: 28px; height: 28px; }
+    .hero-nome span { display: block; }
+    .hero-nome .hero-nome-ponto { display: none; }
+    .vsl-play { flex-direction: row; align-items: flex-end; justify-content: center; padding-bottom: 12px; gap: 10px; background: linear-gradient(to top, rgba(42, 36, 32, 0.72), rgba(42, 36, 32, 0) 60%); }
+    .vsl-disco { width: 46px; height: 46px; }
+    .vsl-disco svg { width: 20px; height: 20px; margin-left: 2px; }
+    .vsl-legenda { padding-bottom: 14px; }
     .hero-texto { margin-top: 26px; gap: 20px; padding-inline: 8px; }
     .hero-sub { font-size: 15.5px; }
     .hero-fatos { grid-template-columns: 1fr; }
@@ -416,7 +420,7 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
     <div class="hero-card hero-vsl">
 
       <div class="hero-topo">
-        <p class="hero-nome">Workshop Mapa de Honorários · 7 de novembro</p>
+        <p class="hero-nome"><span>Workshop Mapa de Honorários</span><span class="hero-nome-ponto"> · </span><span>7 de novembro</span></p>
         <h1 class="serif">Você está cobrando ou <em>pagando para trabalhar</em>?</h1>
       </div>
 
