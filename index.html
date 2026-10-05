@@ -914,7 +914,10 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
   var caixa = document.getElementById('vsl'), video = document.getElementById('vsl-video'), botao = document.getElementById('vsl-play');
   if (!caixa || !video || !botao) return;
   var BASE = 'https://mapadehonorarios.com.br/vsl/';
-  var LISTA = BASE + 'master.m3u8', RESERVA = BASE + 'reserva-480.mp4';
+  // carimbo do vídeo: o codificar-vsl.py troca esta linha a cada vídeo novo. Ele vai no fim de todo endereço
+  // do vídeo, e é o que faz o navegador de quem já assistiu buscar o vídeo novo em vez do que guardou
+  var VERSAO = '20261005-1125';
+  var LISTA = BASE + 'master.m3u8?v=' + VERSAO, RESERVA = BASE + 'reserva-480.mp4?v=' + VERSAO;
   var AUTOPLAY = true;          // false volta ao vídeo que só toca no toque
   var comSom = false;           // a pessoa já pediu o som
   var fonte = 0, fila = [];     // 0 = sem vídeo carregado · 1 = carregando · 2 = pronto
