@@ -894,6 +894,20 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
   });
 })();
 
+// Quem chega com a origem marcada no endereço (utm_ da página de links da bio, de anúncio, de e-mail)
+// leva a mesma marca pro checkout, pra inscrição aparecer na Cakto com a origem certa.
+(function () {
+  var q = new URLSearchParams(location.search), marcas = [];
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) {
+    var v = q.get(k);
+    if (v) marcas.push(k + '=' + encodeURIComponent(v.slice(0, 80)));
+  });
+  if (!marcas.length) return;
+  [].forEach.call(document.querySelectorAll('a[href^="https://pay.cakto.com.br/"]'), function (el) {
+    el.href += (el.href.indexOf('?') > -1 ? '&' : '?') + marcas.join('&');
+  });
+})();
+
 // A VSL do topo. O vídeo mora em mapadehonorarios.com.br/vsl/ em HLS (três qualidades, o aparelho
 // escolhe pela conexão). Ele começa sozinho e SEM SOM, porque nenhum navegador deixa vídeo começar
 // sozinho com som; por cima fica o aviso de ouvir, e o toque volta o vídeo pro começo com som.
