@@ -116,6 +116,7 @@
   .vsl-play:focus-visible { outline-offset: -4px; }
   .vsl-legenda { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5); }
   .vsl.tocando .vsl-play { display: none; }
+  .vsl-chip { display: contents; }
   /* tocando sozinho e sem som: o véu clareia, o disco troca o play pelo alto-falante riscado e pulsa */
   .ico-som, .leg-som, .so-mouse { display: none; }
   .vsl.mudo .ico-play, .vsl.mudo .leg-play { display: none; }
@@ -326,9 +327,14 @@
     .vsl-play { flex-direction: row; align-items: flex-end; justify-content: center; padding-bottom: 12px; gap: 10px; background: linear-gradient(to top, rgba(42, 36, 32, 0.72), rgba(42, 36, 32, 0) 60%); }
     .vsl-disco { width: 46px; height: 46px; }
     .vsl-disco svg { width: 20px; height: 20px; margin-left: 2px; }
-    .vsl.mudo .vsl-disco { width: 46px; height: 46px; }
-    .vsl.mudo .vsl-disco::before { inset: -6px; }
     .vsl-legenda { padding-bottom: 14px; }
+    /* tocando sem som: o aviso vira uma pílula no alto do quadro, porque o pé do vídeo é da legenda */
+    .vsl.mudo .vsl-play { align-items: flex-start; padding: 8px 0 0; background: none; }
+    .vsl.mudo .vsl-chip { display: inline-flex; align-items: center; gap: 7px; padding: 3px 11px 3px 3px; border-radius: 999px; background: rgba(42, 36, 32, 0.78); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28); }
+    .vsl.mudo .vsl-disco { width: 22px; height: 22px; box-shadow: none; }
+    .vsl.mudo .vsl-disco svg { width: 13px; height: 13px; margin-left: 0; }
+    .vsl.mudo .vsl-disco::before { inset: -3px; border-width: 1.5px; }
+    .vsl.mudo .vsl-legenda { padding-bottom: 0; font-size: 10px; letter-spacing: 0.14em; text-shadow: none; }
     .hero-texto { margin-top: 26px; gap: 20px; padding-inline: 8px; }
     .hero-sub { font-size: 15.5px; }
     .hero-fatos { grid-template-columns: 1fr; }
@@ -438,15 +444,18 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
       </div>
 
       <!-- O vídeo sai de mapadehonorarios.com.br/vsl/ (HLS em três qualidades, gerado pelo ffmpeg na pasta
-           captacao/publico/mapa/vsl). O player nativo abre com som ao toque; nada toca sozinho. -->
+           captacao/publico/mapa/vsl). Ele começa sozinho e sem som; o toque reinicia com som. A legenda é gravada
+           no próprio vídeo, no pé do quadro, e por isso o aviso de ouvir não pode ficar ali. -->
       <div class="vsl" id="vsl">
         <video id="vsl-video" playsinline muted preload="none" poster="vsl-capa.webp" aria-label="Soane Figliuolo apresenta o workshop em 4 minutos"></video>
         <button class="vsl-play" type="button" id="vsl-play" aria-label="Assistir ao vídeo de 4 minutos">
+          <span class="vsl-chip">
           <span class="vsl-disco" aria-hidden="true">
             <svg class="ico-play" width="34" height="34" viewBox="0 0 24 24" fill="#FAF6EE" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"></path></svg>
             <svg class="ico-som" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FAF6EE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="#FAF6EE"></path><path d="M16 9.5l4.5 5M20.5 9.5l-4.5 5"></path></svg>
           </span>
           <span class="vsl-legenda"><span class="leg-play">Assistir · 4 min</span><span class="leg-som"><span class="so-toque">Toque</span><span class="so-mouse">Clique</span> pra ouvir</span></span>
+          </span>
         </button>
       </div>
 
