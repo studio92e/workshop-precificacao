@@ -244,9 +244,9 @@
 
   /* ---------- 08 Autoridade ---------- */
   .autoridade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; align-items: center; }
-  .foto-moldura { position: relative; display: flex; justify-content: center; align-items: flex-end; min-height: 460px; }
-  .foto-moldura .placa { position: absolute; inset: 6% 4% 0 4%; background: var(--argila); border-radius: 14px; }
-  .foto-moldura img { position: relative; height: 520px; width: auto; max-width: none; display: block; filter: drop-shadow(0 18px 28px rgba(42, 36, 32, 0.22)); }
+  /* a foto preenche a moldura inteira (2:3, a proporção do original), sem recorte de fundo */
+  .foto-moldura { width: 100%; max-width: 440px; margin-inline: auto; aspect-ratio: 2 / 3; border-radius: 14px; overflow: hidden; background: var(--argila); box-shadow: 0 22px 44px rgba(42, 36, 32, 0.16); }
+  .foto-moldura img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .autoridade-texto { display: flex; flex-direction: column; gap: 20px; }
   .autoridade-texto h2 { font-size: 38px; line-height: 1.15; }
   .autoridade-texto p { font-size: 16.5px; color: var(--fumo); }
@@ -267,18 +267,10 @@
   .prova.vago blockquote { font-family: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif; font-style: normal; font-weight: 400; font-size: 15px; color: var(--fumo); }
 
   /* ---------- 09 Detalhes ---------- */
-  .detalhes { padding-block: 136px 96px; }
-  .detalhes-card { background: var(--argila); border-radius: 14px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .detalhes-foto { position: relative; min-height: 460px; }
-  .detalhes-foto img {
-    position: absolute;
-    bottom: 0; left: 50%;
-    transform: translateX(-53%);
-    height: 124%;
-    width: auto; max-width: none;
-    display: block;
-    filter: drop-shadow(0 22px 34px rgba(42, 36, 32, 0.26));
-  }
+  .detalhes-card { background: var(--argila); border-radius: 14px; overflow: hidden; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* a foto preenche a metade do cartão de ponta a ponta; o corte fica em cima e embaixo, nunca nos lados */
+  .detalhes-foto { position: relative; min-height: 560px; }
+  .detalhes-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 43%; display: block; }
   .detalhes-texto { padding: 40px; display: flex; flex-direction: column; justify-content: center; gap: 20px; }
   .detalhes-selo {
     align-self: flex-start; border: 1px solid rgba(250, 246, 238, 0.28); border-radius: 8px; padding: 8px 14px;
@@ -368,17 +360,14 @@
     .painel-preco { padding-left: 0; padding-top: 28px; border-left: 0; border-top: 1px solid var(--linha-clara); }
 
     .autoridade { grid-template-columns: 1fr; gap: 28px; }
-    .foto-moldura { min-height: 360px; }
-    .foto-moldura img { height: 400px; }
+    .foto-moldura { max-width: 380px; }
     .autoridade-texto h2 { font-size: 28px; }
     .esteve-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .provas-grade { grid-template-columns: 1fr; gap: 16px; margin-top: 32px; }
     .prova { padding: 24px; }
 
-    .detalhes { padding-block: 104px 64px; }
     .detalhes-card { grid-template-columns: 1fr; }
-    .detalhes-foto { min-height: 340px; }
-    .detalhes-foto img { height: 116%; transform: translateX(-50%); }
+    .detalhes-foto { min-height: 0; aspect-ratio: 1 / 1; }
     .detalhes-texto { padding: 26px 22px 32px; }
 
     .faq summary { font-size: 16px; padding-block: 18px; }
@@ -747,8 +736,7 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
     <div class="autoridade">
 
       <div class="foto-moldura">
-        <div class="placa"></div>
-        <img src="soane-02.webp" alt="Soane Figliuolo em pé no escritório, sorrindo">
+        <img src="soane-02.webp" width="900" height="1350" loading="lazy" decoding="async" alt="Soane Figliuolo sentada no sofá do escritório, sorrindo">
       </div>
 
       <div class="autoridade-texto">
@@ -778,7 +766,7 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
     <div class="detalhes-card">
 
       <div class="detalhes-foto">
-        <img src="soane-03.webp" alt="Soane Figliuolo sorrindo, com um tablet nas mãos">
+        <img src="soane-03.webp" width="1120" height="1375" loading="lazy" decoding="async" alt="Soane Figliuolo sorrindo, sentada com um tablet nas mãos">
       </div>
 
       <div class="detalhes-texto">
