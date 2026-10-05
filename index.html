@@ -5,9 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Mapa de Honorarios: workshop ao vivo de precificacao para advogados, com Soane Figliuolo. Sabado, 7 de novembro, a partir das 9h, online.">
 <title>Mapa de Honorários | Você está cobrando ou pagando para trabalhar?</title>
+<link rel="canonical" href="https://mapadehonorarios.com.br/">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://mapadehonorarios.com.br/">
 <meta property="og:title" content="Mapa de Honorários | Você está cobrando ou pagando para trabalhar?">
 <meta property="og:description" content="Mapa de Honorarios: workshop ao vivo de precificacao para advogados, com Soane Figliuolo. Sabado, 7 de novembro, a partir das 9h, online.">
+<meta property="og:image" content="https://mapadehonorarios.com.br/vsl-capa-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -81,42 +87,38 @@
   @keyframes desliza { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } }
 
-  /* ---------- 02 Hero, com a foto vazando do card ---------- */
-  .hero { padding-block: 132px 88px; }
+  /* ---------- 02 Hero: título, a VSL e a chamada, numa coluna só dentro do card escuro ---------- */
+  .hero { padding-block: 100px 88px; }
   .hero-card {
     position: relative;
     background: var(--tinta);
     border-radius: 14px;
-    display: grid;
-    grid-template-columns: 0.86fr 1.14fr;
+    padding: 36px 44px 48px;
   }
-  .hero-foto { position: relative; min-height: 520px; }
-  .hero-foto-fundo {
-    position: absolute; inset: 0;
-    background: var(--argila);
-    border-radius: 14px 0 0 14px;
-    overflow: hidden;
+  .hero-topo { max-width: 860px; margin: 0 auto 26px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+  .hero-nome { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--argila-clara); }
+  .hero-topo h1 { font-size: 44px; line-height: 1.12; color: var(--papel); }
+  .hero-topo h1 em { font-style: italic; color: var(--argila-clara); }
+  .vsl {
+    position: relative; aspect-ratio: 16 / 9; max-width: 980px; margin: 0 auto;
+    border-radius: 12px; overflow: hidden; background: #000;
+    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.38), 0 0 0 1px var(--linha-clara);
   }
-  .hero-foto-fundo::after {
-    content: "";
-    position: absolute; right: -14%; top: -8%;
-    width: 78%; aspect-ratio: 1;
-    border: 1px solid rgba(250, 246, 238, 0.16);
-    border-radius: 50%;
+  .vsl video { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; background: #000; }
+  .vsl-play {
+    position: absolute; inset: 0; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; cursor: pointer;
+    background: linear-gradient(to top, rgba(42, 36, 32, 0.62), rgba(42, 36, 32, 0.08) 55%);
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 9%; gap: 14px; color: var(--papel);
   }
-  .hero-img {
-    position: absolute;
-    bottom: 0; left: 50%;
-    transform: translateX(-57%);
-    height: 112%;
-    width: auto; max-width: none;
-    display: block;
-    filter: drop-shadow(0 22px 34px rgba(42, 36, 32, 0.28));
-  }
-  .hero-texto { padding: 44px 44px 44px 40px; display: flex; flex-direction: column; justify-content: center; gap: 24px; }
-  .hero-nome { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--argila-clara); margin-bottom: -12px; }
-  .hero-texto h1 { font-size: 44px; line-height: 1.12; color: var(--papel); }
-  .hero-texto h1 em { font-style: italic; color: var(--argila-clara); }
+  .vsl-disco { width: 92px; height: 92px; border-radius: 50%; background: var(--argila); display: grid; place-items: center; box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4); transition: transform 0.18s ease, filter 0.18s ease; }
+  .vsl-disco svg { margin-left: 4px; }
+  .vsl-play:hover .vsl-disco { transform: scale(1.06); filter: brightness(1.08); }
+  .vsl-play:focus-visible { outline-offset: -4px; }
+  .vsl-legenda { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5); }
+  .vsl.tocando .vsl-play { display: none; }
+  .hero-texto { max-width: 860px; margin: 36px auto 0; display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center; }
+  .hero-texto .cta { width: min(100%, 560px); }
+  .hero-texto .hero-fatos { width: 100%; }
   .hero-sub { font-size: 17px; color: var(--fumo-claro); }
   .hero-lote { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; line-height: 1.5; letter-spacing: 0.03em; color: var(--fumo-claro); }
   .hero-lote b { color: var(--argila-clara); font-weight: 600; }
@@ -303,13 +305,14 @@
     .wrap { padding-inline: 22px; }
     section { padding-block: 64px; }
 
-    .hero { padding-block: 96px 56px; }
-    .hero-card { grid-template-columns: 1fr; }
-    .hero-foto { min-height: 380px; order: 1; }
-    .hero-foto-fundo { border-radius: 14px 14px 0 0; }
-    .hero-img { height: 114%; left: 50%; transform: translateX(-50%); }
-    .hero-texto { order: 2; padding: 28px 22px 32px; }
-    .hero-texto h1 { font-size: 32px; }
+    .hero { padding-block: 92px 56px; }
+    .hero-card { padding: 26px 14px 30px; }
+    .hero-topo { gap: 14px; margin-bottom: 20px; }
+    .hero-topo h1 { font-size: 31px; }
+    .vsl { border-radius: 10px; }
+    .vsl-disco { width: 70px; height: 70px; }
+    .vsl-disco svg { width: 28px; height: 28px; }
+    .hero-texto { margin-top: 26px; gap: 20px; padding-inline: 8px; }
     .hero-sub { font-size: 15.5px; }
     .hero-fatos { grid-template-columns: 1fr; }
 
@@ -407,19 +410,27 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
   </div>
 </div>
 
-<!-- ===== 02 · Hero ===== -->
+<!-- ===== 02 · Hero: a VSL abre a página ===== -->
 <section class="hero">
   <div class="wrap">
-    <div class="hero-card">
+    <div class="hero-card hero-vsl">
 
-      <div class="hero-foto">
-        <div class="hero-foto-fundo"></div>
-        <img class="hero-img" src="soane-hero.webp" alt="Soane Figliuolo, advogada e fundadora do S. Figliuolo Advocacia de Negócios">
+      <div class="hero-topo">
+        <p class="hero-nome">Workshop Mapa de Honorários · 7 de novembro</p>
+        <h1 class="serif">Você está cobrando ou <em>pagando para trabalhar</em>?</h1>
+      </div>
+
+      <!-- O vídeo sai de mapadehonorarios.com.br/vsl/ (HLS em três qualidades, gerado pelo ffmpeg na pasta
+           captacao/publico/mapa/vsl). O player nativo abre com som ao toque; nada toca sozinho. -->
+      <div class="vsl" id="vsl">
+        <video id="vsl-video" playsinline preload="none" poster="vsl-capa.webp" aria-label="Soane Figliuolo apresenta o workshop em 4 minutos"></video>
+        <button class="vsl-play" type="button" id="vsl-play" aria-label="Assistir ao vídeo de 4 minutos">
+          <span class="vsl-disco" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="#FAF6EE" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"></path></svg></span>
+          <span class="vsl-legenda">Assistir · 4 min</span>
+        </button>
       </div>
 
       <div class="hero-texto">
-        <p class="hero-nome">Workshop Mapa de Honorários · 7 de novembro</p>
-        <h1 class="serif">Você está cobrando ou <em>pagando para trabalhar</em>?</h1>
         <p class="hero-sub">Um workshop prático para advogados que trabalham muito, mas ainda não sabem se seus honorários realmente dão lucro. Em um sábado você sai com o preço de um serviço do seu escritório calculado do zero: o que ele custa, o que você precisa cobrar e até onde dá pra negociar.</p>
 
         <a class="cta" href="#inscricao">Quero calcular o preço dos meus serviços</a>
@@ -857,6 +868,50 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
   [].forEach.call(document.querySelectorAll('a.cta'), function (el) {
     if (/inscrição por R\$ \d+/.test(el.textContent)) el.textContent = 'Fazer minha inscrição por R$ ' + lote.preco;
   });
+})();
+
+// A VSL do topo. O vídeo mora em mapadehonorarios.com.br/vsl/ em HLS (três qualidades, o aparelho
+// escolhe pela conexão). Safari toca HLS sozinho; os outros carregam o hls.js no primeiro toque, pra
+// página não pesar pra quem não assiste. Nada toca sem o toque da pessoa, e toca com som.
+(function () {
+  var caixa = document.getElementById('vsl'), video = document.getElementById('vsl-video'), botao = document.getElementById('vsl-play');
+  if (!caixa || !video || !botao) return;
+  var BASE = 'https://mapadehonorarios.com.br/vsl/';
+  var LISTA = BASE + 'master.m3u8', RESERVA = BASE + 'reserva-480.mp4';
+  var preparado = false;
+
+  function tocar() {
+    video.controls = true;
+    caixa.classList.add('tocando');
+    var p = video.play();
+    if (p && p.catch) p.catch(function () { /* o toque já aconteceu; se o aparelho recusar, os controles ficam à mão */ });
+  }
+  function preparar() {
+    if (preparado) return tocar();
+    preparado = true;
+    if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src = LISTA; return tocar(); }
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.6.5/hls.min.js';
+    s.onload = function () {
+      if (window.Hls && Hls.isSupported()) {
+        var hls = new Hls({ startLevel: -1, capLevelToPlayerSize: true });
+        hls.loadSource(LISTA);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, tocar);
+        hls.on(Hls.Events.ERROR, function (_, dados) { if (dados && dados.fatal) { hls.destroy(); video.src = RESERVA; tocar(); } });
+      } else { video.src = RESERVA; tocar(); }
+    };
+    s.onerror = function () { video.src = RESERVA; tocar(); };
+    document.head.appendChild(s);
+  }
+  botao.addEventListener('click', preparar);
+
+  // marcas pro Pixel (só existe na versão do site): quem deu play, quem passou da metade, quem viu até o fim
+  var marcado = {};
+  function marcar(nome) { if (marcado[nome]) return; marcado[nome] = true; if (window.fbq) fbq('trackCustom', nome); }
+  video.addEventListener('play', function () { marcar('VSLPlay'); });
+  video.addEventListener('timeupdate', function () { if (video.duration && video.currentTime / video.duration >= 0.5) marcar('VSLMetade'); });
+  video.addEventListener('ended', function () { marcar('VSLFim'); });
 })();
 </script>
 </body>
