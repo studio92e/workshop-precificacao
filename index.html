@@ -116,6 +116,17 @@
   .vsl-play:focus-visible { outline-offset: -4px; }
   .vsl-legenda { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5); }
   .vsl.tocando .vsl-play { display: none; }
+  /* tocando sozinho e sem som: o véu clareia, o disco troca o play pelo alto-falante riscado e pulsa */
+  .ico-som, .leg-som, .so-mouse { display: none; }
+  .vsl.mudo .ico-play, .vsl.mudo .leg-play { display: none; }
+  .vsl.mudo .ico-som { display: block; margin-left: 0; }
+  .vsl.mudo .leg-som { display: inline; }
+  .vsl.mudo .vsl-play { background: linear-gradient(to top, rgba(42, 36, 32, 0.6), rgba(42, 36, 32, 0) 42%); }
+  .vsl.mudo .vsl-disco { position: relative; width: 76px; height: 76px; }
+  .vsl.mudo .vsl-disco::before { content: ""; position: absolute; inset: -9px; border-radius: 50%; border: 2px solid rgba(250, 246, 238, 0.75); animation: vsl-pulsa 1.6s ease-out infinite; }
+  @keyframes vsl-pulsa { 0% { transform: scale(0.86); opacity: 0.9; } 100% { transform: scale(1.3); opacity: 0; } }
+  @media (hover: hover) and (pointer: fine) { .so-toque { display: none; } .so-mouse { display: inline; } }
+  @media (prefers-reduced-motion: reduce) { .vsl.mudo .vsl-disco::before { animation: none; } }
   .hero-texto { max-width: 860px; margin: 36px auto 0; display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center; }
   .hero-texto .cta { width: min(100%, 560px); }
   .hero-texto .hero-fatos { width: 100%; }
@@ -315,6 +326,8 @@
     .vsl-play { flex-direction: row; align-items: flex-end; justify-content: center; padding-bottom: 12px; gap: 10px; background: linear-gradient(to top, rgba(42, 36, 32, 0.72), rgba(42, 36, 32, 0) 60%); }
     .vsl-disco { width: 46px; height: 46px; }
     .vsl-disco svg { width: 20px; height: 20px; margin-left: 2px; }
+    .vsl.mudo .vsl-disco { width: 46px; height: 46px; }
+    .vsl.mudo .vsl-disco::before { inset: -6px; }
     .vsl-legenda { padding-bottom: 14px; }
     .hero-texto { margin-top: 26px; gap: 20px; padding-inline: 8px; }
     .hero-sub { font-size: 15.5px; }
@@ -427,10 +440,13 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
       <!-- O vídeo sai de mapadehonorarios.com.br/vsl/ (HLS em três qualidades, gerado pelo ffmpeg na pasta
            captacao/publico/mapa/vsl). O player nativo abre com som ao toque; nada toca sozinho. -->
       <div class="vsl" id="vsl">
-        <video id="vsl-video" playsinline preload="none" poster="vsl-capa.webp" aria-label="Soane Figliuolo apresenta o workshop em 4 minutos"></video>
+        <video id="vsl-video" playsinline muted preload="none" poster="vsl-capa.webp" aria-label="Soane Figliuolo apresenta o workshop em 4 minutos"></video>
         <button class="vsl-play" type="button" id="vsl-play" aria-label="Assistir ao vídeo de 4 minutos">
-          <span class="vsl-disco" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="#FAF6EE" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"></path></svg></span>
-          <span class="vsl-legenda">Assistir · 4 min</span>
+          <span class="vsl-disco" aria-hidden="true">
+            <svg class="ico-play" width="34" height="34" viewBox="0 0 24 24" fill="#FAF6EE" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"></path></svg>
+            <svg class="ico-som" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FAF6EE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="#FAF6EE"></path><path d="M16 9.5l4.5 5M20.5 9.5l-4.5 5"></path></svg>
+          </span>
+          <span class="vsl-legenda"><span class="leg-play">Assistir · 4 min</span><span class="leg-som"><span class="so-toque">Toque</span><span class="so-mouse">Clique</span> pra ouvir</span></span>
         </button>
       </div>
 
@@ -875,47 +891,97 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
 })();
 
 // A VSL do topo. O vídeo mora em mapadehonorarios.com.br/vsl/ em HLS (três qualidades, o aparelho
-// escolhe pela conexão). Safari toca HLS sozinho; os outros carregam o hls.js no primeiro toque, pra
-// página não pesar pra quem não assiste. Nada toca sem o toque da pessoa, e toca com som.
+// escolhe pela conexão). Ele começa sozinho e SEM SOM, porque nenhum navegador deixa vídeo começar
+// sozinho com som; por cima fica o aviso de ouvir, e o toque volta o vídeo pro começo com som.
+// Se o aparelho recusar até o início mudo (economia de bateria do iPhone, economia de dados, "reduzir
+// movimento"), fica a capa com o botão de assistir, e o toque toca com som.
+// Estados da caixa: sem classe = parado na capa · "mudo" = tocando sozinho sem som · "tocando" = com som.
 (function () {
   var caixa = document.getElementById('vsl'), video = document.getElementById('vsl-video'), botao = document.getElementById('vsl-play');
   if (!caixa || !video || !botao) return;
   var BASE = 'https://mapadehonorarios.com.br/vsl/';
   var LISTA = BASE + 'master.m3u8', RESERVA = BASE + 'reserva-480.mp4';
-  var preparado = false;
+  var AUTOPLAY = true;          // false volta ao vídeo que só toca no toque
+  var comSom = false;           // a pessoa já pediu o som
+  var fonte = 0, fila = [];     // 0 = sem vídeo carregado · 1 = carregando · 2 = pronto
 
-  function tocar() {
-    video.controls = true;
-    caixa.classList.add('tocando');
-    var p = video.play();
-    if (p && p.catch) p.catch(function () { /* o toque já aconteceu; se o aparelho recusar, os controles ficam à mão */ });
-  }
-  function preparar() {
-    if (preparado) return tocar();
-    preparado = true;
-    if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src = LISTA; return tocar(); }
+  // marcas pro Pixel (só existe na versão do site). Como o vídeo começa sozinho, só conta quem ligou o som:
+  // VSLPlay = tocou pra ouvir · VSLMetade = passou da metade com som · VSLFim = viu até o fim com som
+  var marcado = {};
+  function marcar(nome) { if (marcado[nome]) return; marcado[nome] = true; if (window.fbq) fbq('trackCustom', nome); }
+
+  // Safari e Chrome novo tocam a lista sozinhos; os outros baixam o hls.js
+  function comFonte(fn) {
+    if (fonte === 2) return fn();
+    fila.push(fn);
+    if (fonte === 1) return;
+    fonte = 1;
+    function pronto() { fonte = 2; var f = fila; fila = []; for (var i = 0; i < f.length; i++) f[i](); }
+    function reserva() { video.src = RESERVA; if (fonte === 2) retomar(); else pronto(); }
+    if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src = LISTA; return pronto(); }
     var s = document.createElement('script');
     s.src = 'https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.6.5/hls.min.js';
     s.onload = function () {
-      if (window.Hls && Hls.isSupported()) {
-        var hls = new Hls({ startLevel: -1, capLevelToPlayerSize: true });
-        hls.loadSource(LISTA);
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, tocar);
-        hls.on(Hls.Events.ERROR, function (_, dados) { if (dados && dados.fatal) { hls.destroy(); video.src = RESERVA; tocar(); } });
-      } else { video.src = RESERVA; tocar(); }
+      if (!(window.Hls && Hls.isSupported())) return reserva();
+      var hls = new Hls({ startLevel: -1, capLevelToPlayerSize: true });
+      hls.loadSource(LISTA);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, pronto);
+      hls.on(Hls.Events.ERROR, function (_, dados) { if (dados && dados.fatal) { hls.destroy(); reserva(); } });
     };
-    s.onerror = function () { video.src = RESERVA; tocar(); };
+    s.onerror = reserva;
     document.head.appendChild(s);
   }
-  botao.addEventListener('click', preparar);
+  function tentar() { var p = video.play(); if (p && p.catch) p.catch(function () {}); return p; }
+  function retomar() { if (caixa.classList.contains('mudo') || caixa.classList.contains('tocando')) tentar(); }
+  video.addEventListener('error', function () { if (video.src === LISTA) { video.src = RESERVA; retomar(); } });
 
-  // marcas pro Pixel (só existe na versão do site): quem deu play, quem passou da metade, quem viu até o fim
-  var marcado = {};
-  function marcar(nome) { if (marcado[nome]) return; marcado[nome] = true; if (window.fbq) fbq('trackCustom', nome); }
-  video.addEventListener('play', function () { marcar('VSLPlay'); });
-  video.addEventListener('timeupdate', function () { if (video.duration && video.currentTime / video.duration >= 0.5) marcar('VSLMetade'); });
-  video.addEventListener('ended', function () { marcar('VSLFim'); });
+  function rotulo() {
+    botao.setAttribute('aria-label', caixa.classList.contains('mudo') ? 'Ligar o som e ver o vídeo do começo' : 'Assistir ao vídeo de 4 minutos');
+  }
+  function parar() { caixa.classList.remove('mudo', 'tocando'); video.controls = false; rotulo(); }
+
+  // começa sozinho, sem som
+  function iniciarMudo() {
+    comFonte(function () {
+      if (comSom) return;
+      video.muted = true;
+      var p = video.play();
+      function ok() { if (!comSom) { caixa.classList.add('mudo'); rotulo(); } }
+      if (p && p.then) p.then(ok).catch(function () { /* o aparelho recusou: fica a capa com o play */ });
+      else ok();
+    });
+  }
+  // o toque: som ligado, do começo
+  botao.addEventListener('click', function () {
+    comSom = true;
+    marcar('VSLPlay');
+    comFonte(function () {
+      try { video.currentTime = 0; } catch (e) {}
+      video.muted = false;
+      video.controls = true;
+      caixa.classList.remove('mudo');
+      caixa.classList.add('tocando');
+      rotulo();
+      tentar();
+    });
+  });
+  video.addEventListener('ended', function () { if (!video.muted) marcar('VSLFim'); parar(); });
+
+  // sem som e fora da tela, o vídeo pausa pra não gastar os dados de quem já rolou a página;
+  // com som ele segue tocando, que é o que a pessoa pediu
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (itens) {
+      if (!caixa.classList.contains('mudo')) return;
+      if (itens[0].isIntersecting) tentar(); else video.pause();
+    }, { threshold: 0.2 }).observe(caixa);
+  }
+
+  var economia = navigator.connection && navigator.connection.saveData;
+  var semMovimento = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (AUTOPLAY && !economia && !semMovimento) iniciarMudo();
+
+  video.addEventListener('timeupdate', function () { if (!video.muted && video.duration && video.currentTime / video.duration >= 0.5) marcar('VSLMetade'); });
 })();
 </script>
 </body>
