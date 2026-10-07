@@ -1087,6 +1087,39 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
   if (AUTOPLAY && !economia && !semMovimento) iniciarMudo();
 
   video.addEventListener('timeupdate', function () { if (!video.muted && video.duration && video.currentTime / video.duration >= 0.5) marcar('VSLMetade'); });
+
+  // Quanto do vídeo foi visto, com e sem som, vai pro servidor do estúdio (captacao/src/vsl.js), que só
+  // soma: não guarda quem viu. Cada marco sai uma vez por visita. Vale o tempo que o vídeo passou
+  // tocando, não o ponto em que ele está, então arrastar a barra não conta. A conferência fica em
+  // material.studio91.com.br/rastreio. A origem é o nome do anúncio (utm_content) ou o canal (utm_source).
+  var CONTAGEM = (/^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? '' : 'https://mapadehonorarios.com.br') + '/api/vsl';
+  var origem = '';
+  try { var q = new URLSearchParams(location.search); origem = (q.get('utm_content') || q.get('utm_source') || '').split('|')[0].slice(0, 60); } catch (e) {}
+  var contado = {}, visto = { mudo: 0, som: 0 }, ultimo = null;
+  function contar(marco) {
+    if (contado[marco]) return;
+    contado[marco] = true;
+    try { navigator.sendBeacon(CONTAGEM, JSON.stringify({ m: marco, o: origem })); } catch (e) {}
+  }
+  contar('visita');
+  video.addEventListener('timeupdate', function () {
+    var t = video.currentTime, modo = video.muted ? 'mudo' : 'som', d = ultimo === null ? 0 : t - ultimo;
+    ultimo = t;
+    if (!(d > 0 && d <= 1.5 * (video.playbackRate || 1))) return;   // salto da barra ou volta pro começo
+    visto[modo] += d;
+    var s = visto[modo], dur = video.duration || 0;
+    if (s >= 1) contar(modo + ':inicio');
+    if (s >= 10) contar(modo + ':s10');
+    if (s >= 30) contar(modo + ':s30');
+    if (!dur) return;
+    [25, 50, 75].forEach(function (p) { if (s >= dur * p / 100) contar(modo + ':p' + p); });
+    if (s >= dur * 0.95) contar(modo + ':fim');
+  });
+  // o vídeo acabou: uma travada de conexão no caminho come uns segundos da soma, então no fim vale 85%
+  video.addEventListener('ended', function () {
+    var modo = video.muted ? 'mudo' : 'som';
+    if (video.duration && visto[modo] >= video.duration * 0.85) contar(modo + ':fim');
+  });
 })();
 </script>
 </body>
