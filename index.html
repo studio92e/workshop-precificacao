@@ -639,21 +639,21 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
 
     <div class="telas">
       <figure class="tela">
-        <div class="tela-quadro"><img src="planilha-hora.webp" width="320" height="568" loading="lazy" alt="Animação do painel: as despesas do mês são lançadas e o custo de cada hora de trabalho aparece calculado"></div>
+        <div class="tela-quadro"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="planilha-hora.webp" width="320" height="568" alt="Animação do painel: as despesas do mês são lançadas e o custo de cada hora de trabalho aparece calculado"></div>
         <figcaption>
           <h3>Quanto custa a sua hora</h3>
           <p>Você lança as despesas do mês e ele mostra quanto cada hora de trabalho precisa render pra pagar o escritório.</p>
         </figcaption>
       </figure>
       <figure class="tela">
-        <div class="tela-quadro"><img src="planilha-camadas.webp" width="320" height="568" loading="lazy" alt="Animação do painel: o honorário de um serviço cresce em barras, uma para cada parte do preço"></div>
+        <div class="tela-quadro"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="planilha-camadas.webp" width="320" height="568" alt="Animação do painel: o honorário de um serviço cresce em barras, uma para cada parte do preço"></div>
         <figcaption>
           <h3>O honorário, parte por parte</h3>
           <p>Horas, complexidade, lucro e imposto entram um de cada vez, e dá pra ver quanto cada um pesa no valor final.</p>
         </figcaption>
       </figure>
       <figure class="tela">
-        <div class="tela-quadro"><img src="planilha-cobrado.webp" width="320" height="568" loading="lazy" alt="Animação do painel: um serviço é registrado e o valor cobrado aparece ao lado do valor calculado"></div>
+        <div class="tela-quadro"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="planilha-cobrado.webp" width="320" height="568" alt="Animação do painel: um serviço é registrado e o valor cobrado aparece ao lado do valor calculado"></div>
         <figcaption>
           <h3>O que você cobrou e o que a conta pedia</h3>
           <p>Registre quanto cobrou em cada serviço e ele aponta em quais você recebeu menos do que deveria.</p>
@@ -1004,7 +1004,7 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
   var BASE = 'https://mapadehonorarios.com.br/vsl/';
   // carimbo do vídeo: o codificar-vsl.py troca esta linha a cada vídeo novo. Ele vai no fim de todo endereço
   // do vídeo, e é o que faz o navegador de quem já assistiu buscar o vídeo novo em vez do que guardou
-  var VERSAO = '20261005-1125';
+  var VERSAO = '20261008-1404';
   var LISTA = BASE + 'master.m3u8?v=' + VERSAO, RESERVA = BASE + 'reserva-480.mp4?v=' + VERSAO;
   var AUTOPLAY = true;          // false volta ao vídeo que só toca no toque
   var comSom = false;           // a pessoa já pediu o som
@@ -1120,6 +1120,20 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
     var modo = video.muted ? 'mudo' : 'som';
     if (video.duration && visto[modo] >= video.duration * 0.85) contar(modo + ':fim');
   });
+})();
+
+// As três animações do painel somam 1 MB e ficam longe do topo. Em conexão fraca o loading="lazy" do
+// navegador baixa as três logo na abertura (a margem dele passa de milhares de pixels), e elas disputam
+// a conexão com o vídeo do topo. Aqui cada uma só baixa quando está a menos de uma tela de distância.
+(function () {
+  var imgs = [].slice.call(document.querySelectorAll('img[data-src]'));
+  if (!imgs.length) return;
+  function por(el) { el.src = el.getAttribute('data-src'); el.removeAttribute('data-src'); }
+  if (!('IntersectionObserver' in window)) return imgs.forEach(por);
+  var olho = new IntersectionObserver(function (itens) {
+    itens.forEach(function (i) { if (i.isIntersecting) { por(i.target); olho.unobserve(i.target); } });
+  }, { rootMargin: '600px 400px' });
+  imgs.forEach(function (el) { olho.observe(el); });
 })();
 </script>
 </body>
