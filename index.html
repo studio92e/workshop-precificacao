@@ -511,7 +511,7 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
   </div>
 </div>
 
-<!-- ===== 02 · Hero: a VSL abre a página ===== -->
+<!-- ===== 02 · Hero: título e chamada ===== -->
 <section class="hero">
   <div class="wrap">
     <div class="hero-card hero-vsl">
@@ -521,22 +521,9 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
         <h1 class="serif">Você está cobrando ou <em>pagando para trabalhar</em>?</h1>
       </div>
 
-      <!-- O vídeo sai de mapadehonorarios.com.br/vsl/ (HLS em três qualidades, gerado pelo ffmpeg na pasta
-           captacao/publico/mapa/vsl). Ele começa sozinho e sem som; o toque reinicia com som. A legenda é gravada
-           no próprio vídeo, no pé do quadro, e por isso o aviso de ouvir não pode ficar ali. -->
-      <div class="vsl" id="vsl">
-        <video id="vsl-video" playsinline muted preload="none" poster="vsl-capa.webp" aria-label="Soane Figliuolo apresenta o workshop em 4 minutos"></video>
-        <button class="vsl-play" type="button" id="vsl-play" aria-label="Assistir ao vídeo de 4 minutos">
-          <span class="vsl-chip">
-          <span class="vsl-disco" aria-hidden="true">
-            <svg class="ico-play" width="34" height="34" viewBox="0 0 24 24" fill="#FAF6EE" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"></path></svg>
-            <svg class="ico-som" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FAF6EE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="#FAF6EE"></path><path d="M16 9.5l4.5 5M20.5 9.5l-4.5 5"></path></svg>
-          </span>
-          <span class="vsl-legenda"><span class="leg-play">Assistir · 4 min</span><span class="leg-som"><span class="so-toque">Toque</span><span class="so-mouse">Clique</span> pra ouvir</span></span>
-          </span>
-        </button>
-      </div>
-
+      <!-- A VSL saiu do topo em 09/10/2026: em três dias de anúncio ela começou pra 21% de quem abriu a
+           página e 5 pessoas ligaram o som. O estilo e o script dela ficam no arquivo, parados, e o vídeo
+           segue em mapadehonorarios.com.br/vsl/. Pra voltar, o trecho está em _antes-20261009/landing.html. -->
       <div class="hero-texto">
         <p class="hero-sub">Um workshop prático para advogados que trabalham muito, mas ainda não sabem se seus honorários realmente dão lucro. Em um sábado você sai com o preço de um serviço do seu escritório calculado do zero: o que ele custa, o que você precisa cobrar e até onde dá pra negociar.</p>
 
@@ -1000,7 +987,15 @@ src="https://www.facebook.com/tr?id=1290908899732732&ev=PageView&noscript=1" alt
 // Estados da caixa: sem classe = parado na capa · "mudo" = tocando sozinho sem som · "tocando" = com som.
 (function () {
   var caixa = document.getElementById('vsl'), video = document.getElementById('vsl-video'), botao = document.getElementById('vsl-play');
-  if (!caixa || !video || !botao) return;
+  if (!caixa || !video || !botao) {
+    // sem o vídeo na página, a visita continua sendo contada no mesmo lugar (material.studio91.com.br/rastreio)
+    try {
+      var qv = new URLSearchParams(location.search);
+      navigator.sendBeacon((/^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? '' : 'https://mapadehonorarios.com.br') + '/api/vsl',
+        JSON.stringify({ m: 'visita', o: (qv.get('utm_content') || qv.get('utm_source') || '').split('|')[0].slice(0, 60) }));
+    } catch (e) {}
+    return;
+  }
   var BASE = 'https://mapadehonorarios.com.br/vsl/';
   // carimbo do vídeo: o codificar-vsl.py troca esta linha a cada vídeo novo. Ele vai no fim de todo endereço
   // do vídeo, e é o que faz o navegador de quem já assistiu buscar o vídeo novo em vez do que guardou
